@@ -19,7 +19,7 @@ annotated-types==0.7.0
 anyio==4.8.0
 apispec==6.8.1
 apispec-webframeworks==0.5.2
-apt-listchanges==4.8
+# apt-listchanges==4.8
 arc4==0.3.0
 argcomplete==3.6.2
 argon2-cffi==21.1.0
