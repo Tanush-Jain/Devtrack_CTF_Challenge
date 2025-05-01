@@ -1,4 +1,3 @@
-above==2.8
 acstore==20240407
 adblockparser==0.7
 aesedb==0.1.3
@@ -179,7 +178,6 @@ Flor==1.1.3
 fonttools==4.57.0
 fqdn==1.5.1
 frozenlist==1.5.0
-fs==2.4.16
 fsspec==2025.3.2
 fuse-python==1.0.9
 fuzzywuzzy==0.18.0
@@ -200,11 +198,11 @@ googleapis-common-protos==1.66.0
 gpg==1.24.2
 greenbone-feed-sync==25.1.0
 greenlet==3.1.0
-grokevt==0.5
+grpcio==1.56.2
+grpcio-status==1.56.2
+gsd==2.4.0
 gssapi==1.9.0
 gunicorn==23.0.0
-gvm-tools==24.8.0
-gyp-next==0.16.2
 h11==0.14.0
 h2==4.2.0
 hashID==3.1.4
@@ -237,8 +235,6 @@ itypes==1.2.0
 jaraco.classes==3.4.0
 jaraco.collections==5.1.0
 jaraco.context==6.0.1
-jaraco.functools==4.1.0
-jaraco.text==4.0.0
 jedi==0.19.1
 jeepney==0.9.0
 Jinja2==3.1.6
@@ -352,7 +348,6 @@ plaster-pastedeploy==0.5
 platformdirs==4.3.7
 plotly==5.20.0
 pluggy==1.5.0
-pluginbase==1.0.1
 ply==3.11
 poetry-dynamic-versioning==1.8.2
 pooch==1.8.2
@@ -708,7 +703,6 @@ types-requests==2.32
 types-requests-oauthlib==2.0
 types-retry==0.9
 types-RPi.GPIO==0.7
-types-s2clientprotocol==5
 types-seaborn==0.13.2
 types-Send2Trash==1.8
 types-setuptools==75.6
