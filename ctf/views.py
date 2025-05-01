@@ -45,8 +45,32 @@ def admin_portal(request):
     from .models import CTFQuestion, Flag, Participant
 
     if request.method == 'POST':
+        # Handle adding new questions, flags, participants
+        if 'add_question' in request.POST:
+            question_text = request.POST.get('question_text')
+            points = request.POST.get('points')
+            file = request.FILES.get('file')
+            if question_text:
+                question = CTFQuestion(question_text=question_text, points=int(points) if points else 0)
+                if file:
+                    question.file = file
+                question.save()
+        elif 'add_flag' in request.POST:
+            flag_text = request.POST.get('flag_text')
+            question_id = request.POST.get('question')
+            if flag_text and question_id:
+                try:
+                    question = CTFQuestion.objects.get(id=question_id)
+                    Flag.objects.create(flag_text=flag_text, question=question)
+                except CTFQuestion.DoesNotExist:
+                    pass
+        elif 'add_participant' in request.POST:
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            if username and password:
+                Participant.objects.create(username=username, password=password)
         # Handle editing and deleting questions, flags, and participants
-        if 'edit_question' in request.POST:
+        elif 'edit_question' in request.POST:
             question_id = request.POST.get('edit_question_id')
             question_text = request.POST.get('edit_question_text')
             question_points = request.POST.get('edit_question_points')
