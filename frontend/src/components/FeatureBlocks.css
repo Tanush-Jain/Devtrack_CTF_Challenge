@@ -1,0 +1,43 @@
+.feature-blocks-section {
+  margin-top: 4rem;
+  padding: 2rem 6rem;
+  border-top: 3px solid #ff3b3b;
+  box-shadow: 0 0 20px #ff3b3b;
+  position: relative;
+  z-index: 20;
+}
+
+.feature-blocks-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.feature-block {
+  background-color: #1a1a1a;
+  border-radius: 20px;
+  border: 2px solid #ff3b3b;
+  box-shadow: 0 0 15px #ff3b3b;
+  flex: 1;
+  padding: 2rem;
+  text-align: center;
+  color: white;
+  transition: box-shadow 0.3s ease;
+}
+
+.feature-block:hover {
+  box-shadow: 0 0 25px #ff1a1a;
+}
+
+.feature-block h3 {
+  margin-bottom: 1rem;
+  font-size: 1.6rem;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1.5px;
+}
+
+.feature-block p {
+  font-size: 1.1rem;
+  color: #ccc;
+  line-height: 1.4;
+}

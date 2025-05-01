@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Login - Squid Game Theme</title>
+    <style>
+        /* Squid Game inspired colors and styling without glowing effects */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #ff4da6;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+        .home-button:hover {
+            background: #ff80bf;
+        }
+
+        .login-container {
+            background: #111;
+            border: 4px solid #ff4da6; /* Squid Game pink */
+            border-radius: 15px;
+            padding: 40px 50px;
+            width: 350px;
+            text-align: center;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #ff4da6; /* Squid Game pink */
+        }
+
+        .login-form .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .login-form label {
+            display: block;
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: #ff99cc; /* lighter pink */
+        }
+
+        .login-form input[type="text"],
+        .login-form input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ff4da6;
+            border-radius: 8px;
+            background: #1a1a1a;
+            color: #fff;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .login-form input[type="text"]:focus,
+        .login-form input[type="password"]:focus {
+            border-color: #ff80bf;
+            outline: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px 0;
+            background: #ff4da6;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background: #ff80bf;
+        }
+
+        .error-message {
+            color: #ff99cc;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="home-button">HOME</a>
+    <div class="login-container">
+        <h1 class="title">Squid Game Admin Portal</h1>
+        <form method="POST" class="login-form">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter admin username" required />
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter password" required />
+            </div>
+            {% if error %}
+            <p class="error-message">{{ error }}</p>
+            {% endif %}
+            <button type="submit" class="btn-login">Login</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,263 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SquidGame CTF - Home</title>
+    <link rel="icon" type="image/png" href="{% static 'assets/Logo.png' %}" />
+    <style>
+        /* Reset and base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #111111;
+            color: #eee;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        a {
+            color: #ff4da6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Header */
+        header {
+            background: #1a1a1a;
+            padding: 1rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(255, 77, 166, 0.3);
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+        }
+        header .logo {
+            color: #ff4da6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: 900;
+            font-size: 1.5rem;
+        }
+        header nav a {
+            color: #ff4da6;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-left: 2rem;
+        }
+        header nav a.btn {
+            background-color: #ff4da6;
+            color: #111;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 700;
+            box-shadow: none;
+            transition: background-color 0.3s ease;
+        }
+        header nav a.btn:hover {
+            background-color: #e03e9e;
+            color: #fff;
+        }
+
+        /* Main content */
+        main {
+            flex: 1;
+            display: flex;
+            padding: 4rem 6rem;
+            gap: 4rem;
+            align-items: center;
+            justify-content: center;
+            background: #1a1a1a;
+        }
+        .left-content {
+            max-width: 600px;
+        }
+        .left-content h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #ff4da6;
+            margin-bottom: 1rem;
+        }
+        .left-content p {
+            font-size: 1.25rem;
+            line-height: 1.6;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            background-color: #ff4da6;
+            box-shadow: 0 4px 12px rgba(255, 77, 166, 0.6);
+            transition: background-color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+        .btn:hover {
+            background-color: #e03e9e;
+        }
+        .btn.admin {
+            background-color: #e03e9e;
+        }
+        .btn.participant {
+            background-color: #ff66b3;
+        }
+        .btn.live_scoreboard {
+            background-color: #ff80bf;
+        }
+        .btn.live_scoreboard:hover {
+            background-color: #ff4da6;
+        }
+
+        /* Right content */
+        .right-content {
+            max-width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(255, 77, 166, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .right-content img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+        }
+
+        /* Feature blocks */
+        section.features {
+            background: #111111;
+            padding: 3rem 6rem;
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        .feature-block {
+            background-color: #222222;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(255, 77, 166, 0.4);
+            flex: 1;
+            padding: 2rem;
+            text-align: center;
+            color: #eee;
+            transition: box-shadow 0.3s ease;
+        }
+        .feature-block:hover {
+            box-shadow: 0 4px 20px rgba(255, 77, 166, 0.7);
+        }
+        .feature-block h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff4da6;
+        }
+        .feature-block p {
+            font-size: 1.1rem;
+            color: #ccc;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: #888;
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-top: 1px solid #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            main {
+                flex-direction: column;
+                padding: 2rem 3rem;
+            }
+            .right-content {
+                max-width: 100%;
+                margin-top: 2rem;
+            }
+            section.features {
+                flex-direction: column;
+                margin: 2rem 3rem;
+            }
+            .feature-block {
+                margin-bottom: 1.5rem;
+            }
+            .btn-group {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            SquidGame CTF
+        </div>
+        <nav>
+            <a href="/admin_login">Admin Portal</a>
+            <a href="/participant">Participant Portal</a>
+            <a href="/live_scoreboard_page" class="btn">Live Scoreboard</a>
+        </nav>
+    </header>
+    <main>
+        <div class="left-content">
+            <h1>Welcome to SquidGame CTF</h1>
+            <p>Enter the world of SquidGame CTF, where every challenge tests your wit and skill. Join the ultimate cybersecurity battle and prove your mastery.</p>
+            <div class="btn-group">
+                <a href="/admin_login" class="btn admin">Admin Portal</a>
+                <a href="/participant" class="btn participant">Participant Portal</a>
+                <a href="/live_scoreboard_page" class="btn live_scoreboard">Live Scoreboard</a>
+            </div>
+        </div>
+        <div class="right-content">
+            {% comment %} <img src="/static/assets/squidgame_guard.png" alt="3D Squid Game Guard" /> {% endcomment %}
+            <img src="/static/assets/1.png" alt="Additional SquidGame Image" />
+        </div>
+    </main>
+    <section class="features">
+        <div class="feature-block">
+            <h3>Challenging Puzzles</h3>
+            <p>Engage with complex and thematic puzzles inspired by Squid Game.</p>
+        </div>
+        <div class="feature-block">
+            <h3>Real-time Scoreboard</h3>
+            <p>Track your progress and compete with others in real-time.</p>
+        </div>
+        <div class="feature-block">
+            <h3>Immersive Experience</h3>
+            <p>Dive into a fully themed environment with animations and effects.</p>
+        </div>
+    </section>
+    <footer>
+        © 2025 SquidGame CTF
+    </footer>
+</body>
+</html>

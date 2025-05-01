@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live Scoreboard - SquidGame CTF</title>
+    <link rel="icon" type="image/png" href="{% static 'assets/Logo.png' %}" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #330033);
+            color: #eee;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #ff4da6;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            font-size: 3rem;
+            text-shadow: 0 0 10px #ff4da6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        table {
+            width: 100%;
+            max-width: 700px;
+            border-collapse: collapse;
+            background: #222;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(255, 77, 166, 0.7);
+        }
+        th, td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #444;
+            text-align: left;
+            font-size: 1.3rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        th {
+            background-color: #ff4da6;
+            color: #111;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        tbody tr:hover {
+            background-color: #ff4da6;
+            color: #111;
+            cursor: default;
+            box-shadow: 0 0 15px 3px #ff4da6;
+        }
+        .back-link {
+            margin-top: 2rem;
+            font-weight: 700;
+            color: #ff4da6;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid #ff4da6;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ff4da6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .back-link:hover {
+            background-color: #ff4da6;
+            color: #111;
+            text-decoration: none;
+        }
+        /* Squid Game themed decorations */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url("{% static 'assets/squidgame_pattern.png' %}") repeat;
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            th, td {
+                font-size: 1.1rem;
+                padding: 0.75rem 1rem;
+            }
+            .back-link {
+                font-size: 1rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Live Scoreboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Participant</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="scoreboard-body">
+            <!-- Scores will be dynamically inserted here -->
+        </tbody>
+    </table>
+    <a href="/" class="back-link">Back to Home</a>
+
+    <script>
+        async function fetchScores() {
+            try {
+                const response = await fetch('/live_scoreboard/');
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                const tbody = document.getElementById('scoreboard-body');
+                tbody.innerHTML = '';
+                data.forEach(({username, score}) => {
+                    const row = document.createElement('tr');
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = username;
+                    const scoreCell = document.createElement('td');
+                    scoreCell.textContent = score;
+                    row.appendChild(nameCell);
+                    row.appendChild(scoreCell);
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Failed to fetch scores:', error);
+            }
+        }
+
+        // Initial fetch
+        fetchScores();
+        // Refresh every 10 seconds
+        setInterval(fetchScores, 10000);
+    </script>
+</body>
+</html>

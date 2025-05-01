@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Participant Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: #ccc;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #ff4da6;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: none;
+            transition: background 0.3s ease;
+            z-index: 1000;
+        }
+        .home-button:hover {
+            background: #ff80bf;
+        }
+        h1 {
+            color: #ff4da6;
+            text-shadow: none;
+            margin-top: 60px;
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 900;
+        }
+        h2 {
+            color: #ff4da6;
+            text-shadow: none;
+            margin-top: 40px;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        form {
+            background: #222;
+            padding: 30px 40px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: none;
+            width: 100%;
+            max-width: 700px;
+            box-sizing: border-box;
+        }
+        label, select, input[type="text"] {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #ff4da6;
+            background: #1a1a1a;
+            color: #fff;
+            box-sizing: border-box;
+        }
+        button {
+            background: #ff4da6;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: none;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+        button:hover {
+            background: #ff80bf;
+        }
+        a {
+            color: #ff4da6;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .file-download {
+            margin-top: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .file-download a {
+            color: #ff4da6;
+            font-weight: 700;
+            text-decoration: none;
+        }
+        .file-download a:hover {
+            text-decoration: underline;
+        }
+        .all-solved-message {
+            margin-top: 40px;
+            font-size: 1.5rem;
+            color: #ff4da6;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <a href="{% url 'home' %}" class="home-button">HOME</a>
+    <h1>Participant Page</h1>
+    <p>Welcome, {{ participant.username }}! Your current score: {{ participant.score }}</p>
+
+    <h2>CTF Questions</h2>
+
+    {% if all_questions_solved %}
+        <p class="all-solved-message">Congratulations! You have solved all questions.</p>
+    {% else %}
+        <form method="POST" id="answer-form">
+            {% csrf_token %}
+            <label for="question_id">Select Question:</label>
+            <select name="question_id" id="question-select" required>
+                {% for question in questions %}
+                    <option value="{{ question.id }}">{{ question.question_text }}</option>
+                {% endfor %}
+            </select>
+            <br>
+            {% for question in questions %}
+                {% if question.file %}
+                    <div class="file-download" id="file-download-{{ question.id }}" style="display:none;">
+                        <a href="{{ question.file.url }}" download>Download Attached File for "{{ question.question_text }}"</a>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <br>
+            <label for="answer">Your Answer:</label>
+            <input type="text" name="answer" required />
+            <br>
+            <button type="submit">Submit Answer</button>
+        </form>
+    {% endif %}
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    <a href="{% url 'home' %}">Back to Home</a>
+
+    <script>
+        const questionSelect = document.getElementById('question-select');
+        const fileDownloads = document.querySelectorAll('.file-download');
+
+        function updateFileDownload() {
+            fileDownloads.forEach(div => div.style.display = 'none');
+            const selectedId = questionSelect.value;
+            const selectedDiv = document.getElementById('file-download-' + selectedId);
+            if (selectedDiv) {
+                selectedDiv.style.display = 'block';
+            }
+        }
+
+        if (questionSelect) {
+            questionSelect.addEventListener('change', updateFileDownload);
+            // Initialize on page load
+            updateFileDownload();
+        }
+    </script>
+</body>
+</html>

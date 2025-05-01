@@ -1,0 +1,59 @@
+.squidgame-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, #1a0a2a 0%, #000000 80%);
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Shapes with low opacity and subtle animations */
+
+.shape {
+  position: absolute;
+  opacity: 0.05;
+  animation: pulse 6s ease-in-out infinite;
+}
+
+.shape.circle {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: #ff3b3b;
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.shape.triangle {
+  width: 0;
+  height: 0;
+  border-left: 75px solid transparent;
+  border-right: 75px solid transparent;
+  border-bottom: 130px solid #ff007a;
+  top: 50%;
+  left: 70%;
+  animation-delay: 2s;
+}
+
+.shape.square {
+  width: 120px;
+  height: 120px;
+  background: #ff4f91;
+  top: 75%;
+  left: 40%;
+  animation-delay: 4s;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.05;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(1.1);
+  }
+}

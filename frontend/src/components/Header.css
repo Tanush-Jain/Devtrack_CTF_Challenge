@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background: linear-gradient(90deg, #ff007a, #ff4f91);
+  color: white;
+  font-weight: 700;
+  font-size: 1.8rem;
+  font-family: 'Orbitron', sans-serif;
+  position: relative;
+  z-index: 20;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-text {
+  color: #ff3b3b;
+  font-weight: 900;
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
+.logo-ctf {
+  color: white;
+  font-weight: 700;
+  font-size: 2rem;
+  letter-spacing: 2px;
+}
+
+.header-right .login-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.header-right .login-link:hover {
+  color: #ff3b3b;
+  text-decoration: underline;
+}
