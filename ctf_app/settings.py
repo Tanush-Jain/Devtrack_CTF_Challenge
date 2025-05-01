@@ -13,6 +13,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '#4@ths)3&ibe8a3qbqqd9ma*@9gxagxx6_(4b
 DEBUG = True
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
+if '127.0.0.1' not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append('127.0.0.1')
 
 # Application definition
 INSTALLED_APPS = [
