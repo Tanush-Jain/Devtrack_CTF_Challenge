@@ -167,25 +167,34 @@ def participant_page(request):
         if question_id and answer:
             try:
                 question = CTFQuestion.objects.get(id=question_id)
-                flag = Flag.objects.get(question=question)
-                if flag.flag_text == answer:
-                    # Correct answer
-                    if participant:
-                        if question not in solved_questions:
-                            participant.solved_questions.add(question)
-                            participant.score += question.points
-                            participant.save()
-                    message = f"Congratulations! You won {question.points} points."
-                    # Update next_question after solving
-                    solved_questions = participant.solved_questions.all()
-                    next_question = None
-                    for q in all_questions:
-                        if q not in solved_questions:
-                            next_question = q
-                            break
+                flags = Flag.objects.filter(question=question)
+                if not flags.exists():
+                    message = "No flag found for this question."
                 else:
-                    message = "Incorrect answer. Try again."
-            except (Flag.DoesNotExist, CTFQuestion.DoesNotExist):
+                    # Check if any flag matches the answer
+                    correct_flag = False
+                    for flag in flags:
+                        if flag.flag_text == answer:
+                            correct_flag = True
+                            break
+                    if correct_flag:
+                        # Correct answer
+                        if participant:
+                            if question not in solved_questions:
+                                participant.solved_questions.add(question)
+                                participant.score += question.points
+                                participant.save()
+                        message = f"Congratulations! You won {question.points} points."
+                        # Update next_question after solving
+                        solved_questions = participant.solved_questions.all()
+                        next_question = None
+                        for q in all_questions:
+                            if q not in solved_questions:
+                                next_question = q
+                                break
+                    else:
+                        message = "Incorrect answer. Try again."
+            except CTFQuestion.DoesNotExist:
                 message = "Invalid question selected."
 
     # Prepare question_files dict for file downloads
@@ -194,11 +203,15 @@ def participant_page(request):
     # Only pass the next_question to the template for selection
     questions_to_show = [next_question] if next_question else []
 
+    # Pass the file url of the current question separately for easier access in template
+    current_file_url = next_question.file.url if next_question and next_question.file else None
+
     return render(request, 'participant_page.html', {
         'questions': questions_to_show,
         'participant': participant,
         'message': message,
         'question_files': question_files,
+        'current_file_url': current_file_url,
         'all_questions_solved': next_question is None,
     })
 

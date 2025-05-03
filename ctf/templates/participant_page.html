@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Participant Page</title>
+    <link rel="icon" type="image/png" href="{% static 'assets/Logo.png' %}" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -118,7 +119,7 @@
 <body>
     <a href="{% url 'home' %}" class="home-button">HOME</a>
     <h1>Participant Page</h1>
-    <p>Welcome, {{ participant.username }}! Your current score: {{ participant.score }}</p>
+    <p style="font-size: 1.8rem; font-weight: 700; color: #ffffff;">Welcome, {{ participant.username }}! Your current score: {{ participant.score }}</p>
 
     <h2>CTF Questions</h2>
 
@@ -150,10 +151,45 @@
     {% endif %}
 
     {% if message %}
-        <p>{{ message }}</p>
+        <p id="message" style="font-weight: 700; font-size: 1.2rem; color: {% if 'Congratulations' in message %}#00ff00{% else %}#ff4d4d{% endif %};">{{ message }}</p>
     {% endif %}
+    <div id="celebration" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;">
+        <!-- Celebration animation container -->
+        <canvas id="confetti-canvas" style="position: absolute; width: 100%; height: 100%;"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script>
+        const messageElem = document.getElementById('message');
+        const celebrationElem = document.getElementById('celebration');
 
-    <a href="{% url 'home' %}">Back to Home</a>
+        function launchConfetti() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 1000 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            (function frame() {
+                confetti(Object.assign({}, defaults, { particleCount: 5, origin: { x: Math.random(), y: Math.random() - 0.2 } }));
+                if (Date.now() < animationEnd) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+
+        if (messageElem) {
+            if (messageElem.textContent.includes('Congratulations')) {
+                celebrationElem.style.display = 'block';
+                launchConfetti();
+            } else if (messageElem.textContent.includes('Incorrect')) {
+                alert('The flag you have entered is wrong. Please try again.');
+            }
+        }
+    </script>
+
+    {% comment %} <a href="{% url 'home' %}">Back to Home</a> {% endcomment %}
 
     <script>
         const questionSelect = document.getElementById('question-select');
