@@ -153,4 +153,53 @@ GitHub: [https://github.com/Tanush-Jain](https://github.com/Tanush-Jain)
 
 ---
 
+## ER Diagram and Mermaid Code
+
+Below are the ER diagram and Mermaid code diagrams representing the database schema and relationships:
+
+![ER Diagram](ctf_er_diagram.png)
+
+![Mermaid Diagram](mermiad_code.png)
+
+---
+
+In Linux terminal how to run it : 
+source venv/bin/activate
+
+source venv/bin/activate && python3 manage.py runserver
+deactivate
+
+---
+
+### Schema of the database :
+
+Entities & Attributes:
+
+**ctf_participant**
+
+- id (PK)
+- username
+- score
+- password
+
+**ctf_ctfquestion**
+
+- id (PK)
+- question_text
+- created_at
+- points
+- file
+
+**ctf_flag**
+
+- id (PK)
+- flag_text
+- question_id (FK to ctf_ctfquestion)
+
+**ctf_participant_solved_questions**
+
+- id (PK)
+- participant_id (FK to ctf_participant)
+- ctfquestion_id (FK to ctf_ctfquestion)
+
 *Thank you for exploring this project!*
