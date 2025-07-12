@@ -1,3 +1,0 @@
--- database: ./db.sqlite3
-
-SELECT * FROM ctf_flag;

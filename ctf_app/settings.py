@@ -1,6 +1,10 @@
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
+
+# Load environment variables from .env file if present (for local development)
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,7 +14,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', '#4@ths)3&ibe8a3qbqqd9ma*@9gxagxx6_(4b
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # WARNING: Set DEBUG=True only temporarily for debugging purposes
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')
 if '127.0.0.1' not in ALLOWED_HOSTS:
@@ -59,6 +63,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ctf_app.wsgi.application'
 
 # Database
+# Ensure you set the DATABASE_URL environment variable on Render to your PostgreSQL database URL
 DATABASES = {
     'default': dj_database_url.config(
         default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
